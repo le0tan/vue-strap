@@ -72,8 +72,8 @@ export default {
           this.delayTimeout = setTimeout(() => {
             this.show = false
             this.clearTimeout()
-          }, 200)
-        } else if (e.type === 'mouseenter') {
+          }, window.__POPOVER_TIMEOUT)
+        } else if (e.type === 'mouseenter') { // if user hovers back, cancel the close
           this.clearTimeout()
         } else {
           this.clearTimeout()
@@ -213,6 +213,9 @@ export default {
     globalEventBus.$on('trigger:bind', this.bindTrigger)
   },
   mounted () {
+    if (!window.hasOwnProperty('__POPOVER_TIMEOUT')) {
+      window.__POPOVER_TIMEOUT = 300
+    }
     let trigger = this.$refs.trigger
     this._viewport = document.body
     if (!trigger) return
