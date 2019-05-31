@@ -66,7 +66,6 @@ export default {
     toggle (e) {
       let trigger = getFirstChild(this.$refs.trigger)
       if (e && this.trigger === 'contextmenu' && trigger === e.target) e.preventDefault()
-      console.log(e.type)
       if (this.show) {
         if (e.type === 'mouseleave') { // only delay closing for hover events
           this.delayTimeout = setTimeout(() => {
@@ -75,7 +74,7 @@ export default {
           }, window.__POPOVER_TIMEOUT)
         } else if (e.type === 'mouseenter') { // if user hovers back, cancel the close
           this.clearTimeout()
-        } else {
+        } else { // otherwise, it's another trigger and we close it immediately
           this.clearTimeout()
           this.show = false;
         }
