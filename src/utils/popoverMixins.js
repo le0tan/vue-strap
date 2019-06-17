@@ -11,6 +11,8 @@ function getFirstChild(node) {
   return node && (node.children.length ? node.children[0] : node)
 }
 
+const POPOVER_TIMEOUT = 300
+
 export default {
   props: {
     trigger: {
@@ -71,7 +73,7 @@ export default {
           this.delayTimeout = setTimeout(() => {
             this.show = false
             this.clearTimeout()
-          }, window.__POPOVER_TIMEOUT)
+          }, POPOVER_TIMEOUT)
         } else if (e.type === 'mouseenter') { // if user hovers back, cancel the close
           this.clearTimeout()
         } else { // otherwise, it's another trigger and we close it immediately
@@ -212,9 +214,6 @@ export default {
     globalEventBus.$on('trigger:bind', this.bindTrigger)
   },
   mounted () {
-    if (!window.hasOwnProperty('__POPOVER_TIMEOUT')) {
-      window.__POPOVER_TIMEOUT = 300
-    }
     let trigger = this.$refs.trigger
     this._viewport = document.body
     if (!trigger) return
