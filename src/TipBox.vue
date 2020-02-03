@@ -1,11 +1,12 @@
 <template>
-    <div class="alert container" :class="[boxStyle, addClass, lightStyle]" :style="customStyle">
+    <div class="alert container" :class="[boxStyle, addClass, lightStyle, seamlessStyle]" :style="customStyle">
         <div v-if="!isDefault" class="icon-wrapper">
             <slot name="_icon">
                 <span v-html="iconType"></span>
             </slot>
         </div>
-        <div class="contents" :class="fontBlack">
+        <div v-if="isSeamless" class="vertical-divider" :class="[boxStyle]"></div>
+        <div class="contents" :class="[fontBlack, seamlessStyle]">
             <h6 v-if="headerContent" class="heading">{{ headerContent }}</h6>
             <button v-if="dismissible" type="button" class="close dismiss-button" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -17,6 +18,8 @@
 </template>
 
 <script>
+
+  import { toBoolean } from './utils/utils';
 
   export default {
     props: {
@@ -51,7 +54,7 @@
       heading: {
         type: String,
         default: null,
-      }, 
+      },
       light: {
         type: Boolean,
         default: false,
@@ -59,11 +62,18 @@
       header: {
         type: String,
         default: null,
-      }
+      },
+      seamless: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       isDefault() {
         return this.type === 'none'
+      },
+      isSeamless() {
+        return toBoolean(this.seamless);
       },
       headerContent() {
         return this.header || this.heading;
@@ -122,6 +132,12 @@
         }
         return style;
       },
+      seamlessStyle() {
+        if (this.seamless) {
+          return 'seamless';
+        }
+        return '';
+      },
       fontBlack() {
         if (this.light) {
           return 'font-black';
@@ -160,6 +176,11 @@
         border-radius: 6px;
     }
 
+    .container.seamless {
+        background-color: transparent;
+        border-color: transparent;
+    }
+
     .heading {
         display: inline;
         float: right;
@@ -195,19 +216,27 @@
         width: 100%;
     }
 
+    .contents.seamless {
+        padding-left: 12px;
+    }
+
     .alert-default {
         color: #24292e;
         background-color: #f6f8fa;
         border-color: #e8ebef;
     }
-    
+
     .alert-border-left {
         background-color: #f9f8f8;
         border-left: solid;
         border-width: 0px 0px 0px 5px;
     }
-        
+
     .font-black {
         color: #24292e;
+    }
+
+    .vertical-divider {
+        width: 4px;
     }
 </style>
