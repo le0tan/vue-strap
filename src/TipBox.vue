@@ -1,6 +1,6 @@
 <template>
     <div class="alert container" :class="[boxStyle, addClass, lightStyle, seamlessStyle]" :style="customStyle">
-        <div v-if="!isDefault" class="icon-wrapper">
+        <div v-if="!isDefault" class="icon-wrapper" :class="[iconStyle]">
             <slot name="_icon">
                 <span v-html="iconType"></span>
             </slot>
@@ -40,6 +40,14 @@
         default: null
       },
       color: {
+        type: String,
+        default: null
+      },
+      icon: {
+        type: String,
+        default: null
+      },
+      iconSize: {
         type: String,
         default: null
       },
@@ -163,6 +171,12 @@
           default:
             return '<i class="fas fa-exclamation"></i>';
         }
+      },
+      iconStyle() {
+        if (this.iconSize) {
+          return `fa-${this.iconSize}`;
+        }
+        return '';
       }
     }
   }
@@ -207,8 +221,6 @@
     .icon-wrapper {
         display: flex;
         margin-right: .5em;
-        width: 22px;
-        height: 22px;
     }
 
     .contents {
