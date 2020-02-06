@@ -2,7 +2,10 @@
   <li v-if="isLi" ref="dropdown" :class="classes">
     <slot name="button">
       <a class="dropdown-toggle" role="button" :class="{disabled: disabled}" @keyup.esc="hideDropdownMenu()">
-        <span v-html="textContent"></span>
+        <span v-html="text"></span>
+        <slot v-if="!text" name="_header">
+          <slot name="header"></slot>
+        </slot>
       </a>
     </slot>
     <slot name="dropdown-menu" :class="menuClasses">
@@ -15,7 +18,10 @@
     <slot name="before"></slot>
     <slot name="button">
       <button type="button" class="btn dropdown-toggle" :class="[btnType, btnWithBefore]" @keyup.esc="hideDropdownMenu()" :disabled="disabled">
-        <span v-html="textContent"></span>
+        <span v-html="text"></span>
+        <slot v-if="!text" name="_header">
+          <slot name="header"></slot>
+        </slot>
       </button>
     </slot>
     <slot name="dropdown-menu" :class="menuClasses">
@@ -42,10 +48,6 @@ export default {
       default: false
     },
     text: {
-      type: String,
-      default: null
-    },
-    header: {
       type: String,
       default: null
     },
@@ -94,9 +96,6 @@ export default {
       }
       return '';
     },
-    textContent () {
-      return this.header || this.text;
-    }
   },
   methods: {
     blur () {
