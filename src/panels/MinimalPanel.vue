@@ -38,6 +38,8 @@
       </div>
       <transition @before-enter="beforeExpandMinimal"
                   @enter="duringExpand"
+                  @after-enter="afterExpand"
+                  @before-leave="beforeCollapse"
                   @leave="duringCollapse"
                   @after-leave="afterCollapseMinimal"
                   v-if="preloadBool || wasRetrieverLoaded"

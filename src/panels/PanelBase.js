@@ -121,6 +121,22 @@ export default {
       window.open(this.popupUrl);
     },
     setMaxHeight() {
+      // Don't play the transition for this case as the loading should feel 'instant'
+      if (this.expandedBool) {
+        this.$refs.panel.style.maxHeight = 'max-content';
+        return;
+      }
+      
+      /*
+      Otherwise, since the vue transition is dependent on localExpanded, we have to manually
+      set our own transition end handlers here for the initial loading of the content.
+      */
+      const onExpandDone = () => {
+        this.$refs.panel.style.maxHeight = 'max-content';
+        this.$refs.panel.removeEventListener('transitionend', onExpandDone);
+      };
+      
+      this.$refs.panel.addEventListener('transitionend', onExpandDone);
       this.$refs.panel.style.maxHeight = `${this.$refs.panel.scrollHeight}px`;
     },
     beforeExpand(el) {
@@ -128,6 +144,12 @@ export default {
     },
     duringExpand(el) {
       jQuery("html").stop();
+      el.style.maxHeight = `${el.scrollHeight}px`;
+    },
+    afterExpand(el) {
+      el.style.maxHeight = 'max-content';
+    },
+    beforeCollapse(el) {
       el.style.maxHeight = `${el.scrollHeight}px`;
     },
     duringCollapse(el) {
@@ -154,9 +176,4 @@ export default {
     this.wasRetrieverLoaded = this.localExpanded; // If it is expanded, load the retriever immediately.
     this.localMinimized = this.minimizedBool;
   },
-  mounted() {
-    // For this case, we want to set and calculate the maximum height only after the
-    // panel has been mounted.
-    if (this.expandedBool && !this.hasSrc) this.setMaxHeight();
-  }
 };
