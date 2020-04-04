@@ -156,7 +156,7 @@ export default {
       if (this.$el.getBoundingClientRect().top < 0) {
         jQuery("html").animate({
           scrollTop: window.scrollY + this.$el.getBoundingClientRect().top - 3
-        }, 700, 'swing')
+        }, 500, 'swing')
       }
       el.style.maxHeight = '0';
     },
