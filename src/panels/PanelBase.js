@@ -123,7 +123,7 @@ export default {
     setMaxHeight() {
       // Don't play the transition for this case as the loading should feel 'instant'
       if (this.expandedBool) {
-        this.$refs.panel.style.maxHeight = 'max-content';
+        this.$refs.panel.style.maxHeight = 'none';
         return;
       }
       
@@ -132,7 +132,7 @@ export default {
       set our own transition end handlers here for the initial loading of the content.
       */
       const onExpandDone = () => {
-        this.$refs.panel.style.maxHeight = 'max-content';
+        this.$refs.panel.style.maxHeight = 'none';
         this.$refs.panel.removeEventListener('transitionend', onExpandDone);
       };
       
@@ -147,7 +147,7 @@ export default {
       el.style.maxHeight = `${el.scrollHeight}px`;
     },
     afterExpand(el) {
-      el.style.maxHeight = 'max-content';
+      el.style.maxHeight = 'none';
     },
     beforeCollapse(el) {
       el.style.maxHeight = `${el.scrollHeight}px`;
