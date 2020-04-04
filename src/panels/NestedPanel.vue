@@ -11,8 +11,7 @@
       </div>
       <div :class="['card', { 'expandable-card': isExpandableCard }, borderType]" v-show="!localMinimized">
           <div :class="['card-header',{'header-toggle':isExpandableCard}, cardType, borderType]"
-               @click.prevent.stop="isExpandableCard && toggle()"
-               @mouseover="onHeaderHover = true" @mouseleave="onHeaderHover = false">
+               @click.prevent.stop="isExpandableCard && toggle()">
               <div class="caret-wrapper">
                   <span :class="['glyphicon', localExpanded ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right']" v-if="showCaret"></span>
               </div>
@@ -28,13 +27,17 @@
                       <panel-switch v-show="isExpandableCard && !noSwitchBool && !showCaret"
                                     :is-open="localExpanded"
                                     :is-light-bg="isLightBg"></panel-switch>
-                      <button type="button" :class="['close-button', 'btn', isLightBg ? 'btn-outline-secondary' : 'btn-outline-light']"
-                              v-show="isSeamless ? onHeaderHover : (!noCloseBool)"
+                      <button type="button"
+                              class="close-button btn"
+                              :class="[isLightBg ? 'btn-outline-secondary' : 'btn-outline-light', { 'seamless-button': isSeamless }]"
+                              v-show="!noCloseBool"
                               @click.stop="close()">
                           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                       </button>
-                      <button type="button" :class="['popup-button', 'btn', isLightBg ? 'btn-outline-secondary' : 'btn-outline-light']"
-                              v-show="((this.popupUrl !== null) && (!isSeamless || onHeaderHover))"
+                      <button type="button"
+                              class="popup-button btn"
+                              :class="[isLightBg ? 'btn-outline-secondary' : 'btn-outline-light', { 'seamless-button': isSeamless }]"
+                              v-show="this.popupUrl"
                               @click.stop="openPopup()">
                           <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>
                       </button>
@@ -113,12 +116,6 @@ export default {
     isLightBg() {
       return this.cardType === 'bg-light' || this.cardType === 'bg-white' || this.cardType === 'bg-warning';
     },
-    showCloseButton() {
-      if (!this.isSeamless) {
-        return !this.noCloseBool;
-      }
-      return this.onHeaderHover;
-    },
   },
 };
 </script>
@@ -127,6 +124,15 @@ export default {
     .card-collapse {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
+    }
+    
+    .seamless-button {
+        opacity: 0;
+        transition: 0.3s opacity;
+    }
+    
+    .card-header:hover .seamless-button {
+        opacity: 1;
     }
 </style>
 

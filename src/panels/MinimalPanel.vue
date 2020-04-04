@@ -9,12 +9,12 @@
         </slot>
       </button>
     </div>
-    <div v-show="!localMinimized" class="card card-flex" @mouseover="onHeaderHover = true" @mouseleave="onHeaderHover = false">
+    <div v-show="!localMinimized" class="card card-flex">
       <div :class="['header-wrapper', { 'header-wrapper-bottom': isHeaderAtBottom, 'header-toggle': isExpandableCard }]"
            @click.prevent.stop="isExpandableCard && toggle()">
         <transition name="header-fade">
           <span v-show="!isHeaderAtBottom" ref="headerWrapper"
-                :class="['card-title', 'card-title-transparent', { 'card-title-opaque': onHeaderHover, 'ellipses': !hasHeaderBool }]">
+                :class="['card-title', 'card-title-transparent', { 'ellipses': !hasHeaderBool }]">
             <slot name="header">
               <span class="card-title-inline"><slot name="_header"></slot></span>
               <span v-show="showDownSwitch" aria-hidden="true"
@@ -22,7 +22,7 @@
             </slot>
           </span>
         </transition>
-        <div :class="['button-wrapper', { 'button-wrapper-expanded': isHeaderAtBottom, 'button-wrapper-visible': onHeaderHover }]">
+        <div :class="['button-wrapper', { 'button-wrapper-expanded': isHeaderAtBottom }]">
           <slot name="button">
             <button v-show="!noCloseBool" class="minimal-button" type="button" @click.stop="close()">
               <span class="glyphicon glyphicon-remove minimal-close-button" aria-hidden="true"></span>
@@ -132,7 +132,7 @@ export default {
     transition: opacity 0.5s;
   }
 
-  .card-title-opaque {
+  .card:hover .card-title-transparent {
     opacity: 1;
   }
 
@@ -145,7 +145,7 @@ export default {
   }
 
   .header-fade-leave-to {
-    opacity: 0;
+    opacity: 0 !important;
   }
 
   .card-title-inline {
@@ -187,14 +187,14 @@ export default {
     vertical-align: text-top;
   }
 
-  .button-wrapper-visible {
-    opacity: 1;
-  }
-
   .button-wrapper-expanded {
     padding-left: 0;
     border: 0;
     margin-left: 0;
+  }
+  
+  .card:hover .button-wrapper {
+    opacity: 1;
   }
 
   .header-toggle {

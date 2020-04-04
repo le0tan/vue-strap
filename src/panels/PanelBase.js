@@ -89,7 +89,6 @@ export default {
   },
   data() {
     return {
-      onHeaderHover: false,
       localExpanded: false,
       localMinimized: false,
       wasRetrieverLoaded: false,
