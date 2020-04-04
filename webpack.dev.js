@@ -3,16 +3,15 @@ const merge = require('webpack-merge');
 
 const config = require('./webpack.common.js');
 
-const TerserPlugin = require('terser-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = merge(config, {
-  mode: 'production',
+  mode: 'development',
   output: {
-    filename: '[name].min.js',
+    filename: '[name].js',
   },
+  devtool: 'source-map',
   plugins: [
-    new TerserPlugin(),
     new VueLoaderPlugin(),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',

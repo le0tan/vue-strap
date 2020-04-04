@@ -6,8 +6,6 @@ src/utils
 !.eslintrc.js
 
 # yuche/vue-strap
-webpack.build.js
-webpack.config.js
 src/Accordion.vue
 src/Affix.vue
 src/Alert.vue
