@@ -101,6 +101,10 @@ export default {
 </script>
 
 <style scoped>
+  .btn {
+    pointer-events: all;
+  }
+
   .morph-title {
     padding: 0 0.3em;
     color: rgba(0, 0, 0, 0.5);
@@ -156,6 +160,10 @@ export default {
     padding: 0;
   }
 
+  .card-container {
+    pointer-events: none;
+  }
+
   .header-wrapper {
     width: 100%;
     display: inline-block;
@@ -192,7 +200,7 @@ export default {
     border: 0;
     margin-left: 0;
   }
-  
+
   .card:hover .button-wrapper {
     opacity: 1;
   }

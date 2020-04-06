@@ -37,6 +37,12 @@
   }
 </script>
 
+<style scoped>
+    .btn {
+        pointer-events: all;
+    }
+</style>
+
 <style>
     .collapse-button {
         font-size: 10px !important;
@@ -45,4 +51,6 @@
         margin-left: 3px;
         margin-top: 2px;
     }
+
+
 </style>

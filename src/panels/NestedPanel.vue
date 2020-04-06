@@ -121,16 +121,24 @@ export default {
 </script>
 
 <style scoped>
+    .btn {
+        pointer-events: all;
+    }
+
     .card-collapse {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
     }
-    
+
+    .card-container {
+        pointer-events: none;
+    }
+
     .seamless-button {
         opacity: 0;
         transition: 0.3s opacity;
     }
-    
+
     .card-header:hover .seamless-button {
         opacity: 1;
     }
