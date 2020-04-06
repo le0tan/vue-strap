@@ -121,6 +121,14 @@ export default {
 </script>
 
 <style scoped>
+    .header-wrapper {
+        pointer-events: all;
+    }
+
+    .morph {
+        pointer-events: all;
+    }
+
     .btn {
         pointer-events: all;
     }
@@ -131,6 +139,10 @@ export default {
     }
 
     .card-container {
+        pointer-events: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
         pointer-events: none;
     }
 
